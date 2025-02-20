@@ -9,42 +9,75 @@ Window.size = (300,650)
 
 class Aplicativo(App):
     def build(self):
+
+            #-----BoxLauouts-----
         layout = BoxLayout(orientation='vertical')
-
         header = BoxLayout(orientation='horizontal')
-
         footer = BoxLayout()
-        footer.size_hint = (1, 0.2)
-
+        footer.size_hint = (1, 0.3)
         main = GridLayout(cols=2)
 
-        texto = Label(text='Aplicativo',font_size='32px')
 
-        bot1 = Button(text='Bot 1')
-        bot2 = Button(text='Bot 2')
-        bot3 = Button(text='Bot 3')
-        bot4 = Button(text='Bot 4')
-        bot5 = Button(text='Bot 5')
+            #-----widget-----
 
+        self.zerar = Button(text='Zerar')
+        self.zerar.size_hint=(1.0,0.2)
+
+        self.display = Label(text='Aplicativo',font_size='32px')
         devs = Label(text='Develop by @Fabrica32')
 
-        header.add_widget(texto)
+        self.bot1 = Button(text='1')
+        self.bot2 = Button(text='2')
+        self.btnMais = Button(text='+')
+        self.btnIgual = Button(text='=')
 
-        main.add_widget(bot1)
-        main.add_widget(bot2)
-        main.add_widget(bot3)
-        main.add_widget(bot4)
-        main.add_widget(bot5)
+
+
+            # -----Binds-----
+        self.bot1.bind(on_press=self.armazenar)
+        self.bot2.bind(on_press=self.armazenar)
+        self.btnMais.bind(on_press=self.armazenar)
+
+
+        self.btnIgual.bind(on_press=self.calcular)
+
+        self.zerar.bind(on_press=self.limpar)
+
+
+
+
+            # -----add_widgets-----
+        header.add_widget(self.display)
+        main.add_widget(self.bot1)
+        main.add_widget(self.bot2)
+        main.add_widget(self.btnMais)
+        main.add_widget(self.btnIgual)
 
         footer.add_widget(devs)
 
+        layout.add_widget(self.zerar)
         layout.add_widget(header)
         layout.add_widget(main)
         layout.add_widget(footer)
 
 
         return layout
+
     
+    def armazenar(self,event):
+        # print(event.text)
+        self.display.text += event.text
+
+    def limpar(self,event):
+        # print(self.display.text)
+        self.display.text = ''
+
+    def calcular(self, event):
+        if('+' in self.display.text):
+            numbers = self.display.text.split('+')
+            soma = float(numbers[0]) + float(numbers[1])
+            self.display.text = str(soma)
+
 
 if __name__ == '__main__':
     Aplicativo().run()
