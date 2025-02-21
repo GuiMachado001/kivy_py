@@ -135,6 +135,8 @@ class Aplicativo(App):
     
     def armazenar(self,event):
         # print(event.text)
+        if(self.display.text == 'Aplicativo'):
+            self.display.text = ''
         self.display.text += event.text
 
     def limpar(self,event):
